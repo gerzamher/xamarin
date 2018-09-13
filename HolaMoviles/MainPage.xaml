@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:HolaMoviles" 
+             x:Class="HolaMoviles.MainPage"
+             x:Name="Root">
+    <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Horizontal"/>
+        
+        <StackLayout Orientation="Vertical">
+            <!-- Place new controls here -->
+           <StackLayout.Margin>
+               <OnPlatform iOS="30" Android="10" x:TypeArguments="Thickness"/> 
+           </StackLayout.Margin> 
+            
+            <Label Text="Nombre"/>
+            
+            <Entry Placeholder="bienvenido"
+                   IsPassword="{Binding Path=IsToggled, 
+                   Source={x:Reference ControlSwitch}}"/>
+            
+            <Switch x:Name="ControlSwitch"/>
+        </StackLayout>
+        
+        <Button x:Name="ButtonAgregar" Text="Agregar" Command="AgregarComando" />
+        
+        <ListView HorizontalOptions="Center" 
+                  VerticalOptions="CenterAndExpand"
+                  BindingContext="{Binding Source={x:Reference Root}}"
+                  ItemsSource="{Binding Path=Items}"
+                  IsRefreshing="{Binding IsBusy}"
+                  IsPullToRefreshEnabled="true"
+                  RefreshCommand="{Binding AgregarComando}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Margin="5" Text="{Binding Nombre}" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
